@@ -214,7 +214,7 @@ public class AVL {
 	public static void main(String[] args) {
 		AVL tree = new AVL();
 
-		System.out.println("Inserting nodes into an AVL Tree...\n");
+		System.out.println("Inserting nodes...\n");
 		
 		tree.insert(12);
 		tree.insert(8);
