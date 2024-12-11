@@ -248,7 +248,5 @@ public class AVL {
 		System.out.println("\nSearching for node with key = 11...");
 
 		tree.search(11);
-
-		System.out.println("\nThank you for trying my BST program!");
 	}
 }
