@@ -13,7 +13,7 @@ public class AVL {
 
 		@Override
 		public String toString() {
-			return key + "";
+			return key + " ";
 		}
 	}
 
@@ -30,6 +30,9 @@ public class AVL {
 		else if(key > node.key) {
 			node.rightChild = insertNode(node.rightChild, key);
 		}
+
+		node.height = Math.max(getHeight(node.leftChild), getHeight(node.rightChild)) + 1;
+
 		return node;
 	}
 
@@ -40,7 +43,7 @@ public class AVL {
 		return node.height;
 	}
 
-	private int getBalanceFactor(Node node) {
+	private int computeBalanceFactor(Node node) {
 		if(node == null) {
 			return 0;
 		}
@@ -83,30 +86,31 @@ public class AVL {
 		if(node == null) {
 			return null;
 		}
-
-		node.height = Math.max(getHeight(node.leftChild), getHeight(node.rightChild)) + 1;
-		int balanceFactor = getBalanceFactor(node);
-
-		// LL
-		if(balanceFactor > 1 && node.key < node.leftChild.key) {
-			return rotateRight(node);
+		
+		int balanceFactor = computeBalanceFactor(node);		
+		
+		if(balanceFactor > 1) {
+			// LL
+			if(computeBalanceFactor(node.leftChild) >= 0) {
+				return rotateRight(node);
+			}
+			// LR
+			else {
+				node.leftChild = rotateLeft(node.leftChild);
+				return rotateRight(node);
+			}
 		}
 
-		// RR
-		if(balanceFactor < -1 && node.key > node.rightChild.key) {
-			return rotateLeft(node);
-		}
-
-		// LR
-		if(balanceFactor > 1 && node.key > node.leftChild.key) {
-			node.leftChild = rotateLeft(node.leftChild);
-			return rotateRight(node);
-		}
-
-		// RL
-		if(balanceFactor < -1 && node.key < node.rightChild.key) {
-			node.rightChild = rotateRight(node.rightChild);
-			return rotateLeft(node);
+		if(balanceFactor < -1) {
+			// RR
+			if(computeBalanceFactor(node.rightChild) <= 0) {
+				return rotateLeft(node);
+			}
+			// RL
+			else {
+				node.rightChild = rotateRight(node.rightChild);
+				return rotateLeft(node);
+			}
 		}
 		return node;
 	}
@@ -140,6 +144,9 @@ public class AVL {
 				node.rightChild = deleteNode(node.rightChild, minNode.key);
 			}
 		}
+
+		node.height = Math.max(getHeight(node.leftChild), getHeight(node.rightChild)) + 1;
+
 		return node;
 	}
 
@@ -187,7 +194,7 @@ public class AVL {
 		if(node == null) {
 			return;
 		}
-		System.out.print(node + " ");
+		System.out.print(node);
 		preOrderTraverse(node.leftChild);
 		preOrderTraverse(node.rightChild);
 	}
@@ -197,7 +204,7 @@ public class AVL {
 			return;
 		}
 		inOrderTraverse(node.leftChild);
-		System.out.print(node + " ");
+		System.out.print(node);
 		inOrderTraverse(node.rightChild);
 	}
 
@@ -207,7 +214,7 @@ public class AVL {
 		}
 		postOrderTraverse(node.leftChild);
 		postOrderTraverse(node.rightChild);
-		System.out.print(node + " ");
+		System.out.print(node);
 	}
 
 	// Driver
@@ -215,38 +222,29 @@ public class AVL {
 		AVL tree = new AVL();
 
 		System.out.println("Inserting nodes...\n");
-		
-		tree.insert(12);
-		tree.insert(8);
-		tree.insert(18);
-		tree.insert(5);
-		tree.insert(11);
-		tree.insert(17);
-		tree.insert(4);
+
+		tree.insert(61);
+		tree.insert(53);
+		tree.insert(35);
+		tree.insert(27);
+		tree.insert(49);
 
 		System.out.println("Inorder traversal:");
 		tree.inOrderTraverse(tree.root);
 
-		System.out.println("\n\nDeleting node with key = 11...");
+		System.out.println("\n\nDeleting node with key = 61...");
 
-		tree.delete(11);
-
-		System.out.println("\nInorder traversal:");
-		tree.inOrderTraverse(tree.root);
-
-		System.out.println("\n\nDeleting node with key = 8...");
-
-		tree.delete(8);
+		tree.delete(61);
 
 		System.out.println("\nInorder traversal:");
 		tree.inOrderTraverse(tree.root);
 
-		System.out.println("\n\nSearching for node with key = 18...");
+		System.out.println("\n\nSearching for node with key = 35...");
 
-		tree.search(18);
+		tree.search(35);
 
-		System.out.println("\nSearching for node with key = 11...");
+		System.out.println("\nSearching for node with key = 61...");
 
-		tree.search(11);
+		tree.search(61);
 	}
 }
