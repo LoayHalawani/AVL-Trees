@@ -32,7 +32,7 @@ public class AVL {
 		}
 
 		node.height = Math.max(getHeight(node.leftChild), getHeight(node.rightChild)) + 1;
-
+		
 		return node;
 	}
 
@@ -87,8 +87,8 @@ public class AVL {
 			return null;
 		}
 		
-		int balanceFactor = computeBalanceFactor(node);		
-		
+		int balanceFactor = computeBalanceFactor(node);
+
 		if(balanceFactor > 1) {
 			// LL
 			if(computeBalanceFactor(node.leftChild) >= 0) {
@@ -100,7 +100,6 @@ public class AVL {
 				return rotateRight(node);
 			}
 		}
-
 		if(balanceFactor < -1) {
 			// RR
 			if(computeBalanceFactor(node.rightChild) <= 0) {
@@ -222,7 +221,6 @@ public class AVL {
 		AVL tree = new AVL();
 
 		System.out.println("Inserting nodes...\n");
-
 		tree.insert(61);
 		tree.insert(53);
 		tree.insert(35);
@@ -233,18 +231,15 @@ public class AVL {
 		tree.inOrderTraverse(tree.root);
 
 		System.out.println("\n\nDeleting node with key = 61...");
-
 		tree.delete(61);
 
 		System.out.println("\nInorder traversal:");
 		tree.inOrderTraverse(tree.root);
 
 		System.out.println("\n\nSearching for node with key = 35...");
-
 		tree.search(35);
 
 		System.out.println("\nSearching for node with key = 61...");
-
 		tree.search(61);
 	}
 }
