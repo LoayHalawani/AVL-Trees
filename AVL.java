@@ -24,6 +24,7 @@ public class AVL {
 		if(node == null) {
 			return new Node(key);
 		}
+
 		if(key < node.key) {
 			node.leftChild = insertNode(node.leftChild, key);
 		}
@@ -89,6 +90,7 @@ public class AVL {
 		
 		int balanceFactor = computeBalanceFactor(node);
 
+		// Left Heavy
 		if(balanceFactor > 1) {
 			// LL
 			if(computeBalanceFactor(node.leftChild) >= 0) {
@@ -100,6 +102,8 @@ public class AVL {
 				return rotateRight(node);
 			}
 		}
+
+		// Right Heavy
 		if(balanceFactor < -1) {
 			// RR
 			if(computeBalanceFactor(node.rightChild) <= 0) {
@@ -111,6 +115,7 @@ public class AVL {
 				return rotateLeft(node);
 			}
 		}
+
 		return node;
 	}
 
@@ -124,6 +129,7 @@ public class AVL {
 		if(node == null) {
 			return null;
 		}
+
 		if(key < node.key) {
 			node.leftChild = deleteNode(node.leftChild, key);
 		}
